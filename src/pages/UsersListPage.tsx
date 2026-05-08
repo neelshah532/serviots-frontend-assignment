@@ -65,8 +65,6 @@ export const UsersListPage = () => {
           <span>Add New User</span>
         </button>
       </div>
-
-      {/* Controls */}
       <div className="flex flex-col sm:flex-row gap-3 items-start sm:items-center justify-between bg-[var(--color-surface)] p-2 rounded-[var(--radius-lg)] border border-[var(--color-border)] shadow-sm">
         <div className="relative w-full sm:max-w-md">
           <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
@@ -108,8 +106,6 @@ export const UsersListPage = () => {
           </div>
         </div>
       </div>
-
-      {/* Content */}
       <div className="min-h-[420px]">
         {isFetchingUsers ? (
           <SkeletonLoader type={viewMode} count={5} />
