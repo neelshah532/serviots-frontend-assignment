@@ -1,9 +1,8 @@
 import { useState, useEffect } from 'react';
-import { X } from 'lucide-react';
-import { useAppDispatch, useAppSelector } from '../store/hooks';
-import { closeModal, createUser, updateUser } from '../store/userSlice';
-import { toast } from '../hooks/useToast';
-import type { IUserFormData } from '../types/user.types';
+import { X, ChevronDown } from 'lucide-react';
+import { useAppDispatch } from '../redux/store/hooks';
+import { UserCreate, UserUpdate } from '../redux/action/userSlice';
+import type { IUser, IUserFormData } from '../types/user.types';
 
 const INITIAL_FORM_DATA: IUserFormData = {
   firstName: '',
@@ -18,16 +17,23 @@ const INITIAL_FORM_DATA: IUserFormData = {
   company: { name: '', department: '', title: '' },
 };
 
-export const UserFormModal = () => {
+interface IUserFormModalProps {
+  isOpen: boolean;
+  isEditMode: boolean;
+  selectedUser: IUser | undefined;
+  onClose: () => void;
+  onSuccess: () => void;
+}
+
+export const UserFormModal = ({ isOpen, isEditMode, selectedUser, onClose, onSuccess }: IUserFormModalProps) => {
   const dispatch = useAppDispatch();
-  const { isModalOpen, isEditMode, selectedUser } = useAppSelector((state) => state.user);
 
   const [formData, setFormData] = useState<IUserFormData>(INITIAL_FORM_DATA);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
-    if (isModalOpen) {
+    if (isOpen) {
       if (isEditMode && selectedUser) {
         setFormData({
           firstName: selectedUser.firstName,
@@ -46,9 +52,9 @@ export const UserFormModal = () => {
       }
       setErrors({});
     }
-  }, [isModalOpen, isEditMode, selectedUser]);
+  }, [isOpen, isEditMode, selectedUser]);
 
-  if (!isModalOpen) return null;
+  if (!isOpen) return null;
 
   const validate = (): boolean => {
     const newErrors: Record<string, string> = {};
@@ -87,19 +93,16 @@ export const UserFormModal = () => {
     if (!validate()) return;
 
     setIsSubmitting(true);
-    await new Promise(resolve => setTimeout(resolve, 800));
-
     try {
       if (isEditMode && selectedUser) {
-        dispatch(updateUser({ id: selectedUser.id, data: formData }));
-        toast.success('User successfully updated', `${formData.firstName} ${formData.lastName} has been updated.`);
+        await dispatch(UserUpdate({ id: selectedUser.id, data: formData })).unwrap();
       } else {
-        dispatch(createUser(formData));
-        toast.success('User successfully created', `${formData.firstName} ${formData.lastName} has been added to the system.`);
+        await dispatch(UserCreate(formData)).unwrap();
       }
-      dispatch(closeModal());
-    } catch {
-      toast.error('An error occurred while saving user data');
+      onSuccess();
+      onClose();
+    } catch (error) {
+      console.error("Error while creating or updating user:", error);
     } finally {
       setIsSubmitting(false);
     }
@@ -107,7 +110,7 @@ export const UserFormModal = () => {
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
-    
+
     if (name.includes('.')) {
       const [parent, child] = name.split('.');
       setFormData((prev) => ({
@@ -146,11 +149,10 @@ export const UserFormModal = () => {
         type={type}
         value={value}
         onChange={handleInputChange}
-        className={`w-full px-3.5 py-2.5 bg-[var(--color-surface-raised)] shadow-[var(--shadow-inset)] rounded-[var(--radius-md)] text-sm font-normal text-[var(--color-text-primary)] placeholder-[var(--color-text-muted)] focus:outline-none transition-all duration-150 ${
-          errors[name]
-            ? 'ring-2 ring-[var(--color-danger)] border-transparent'
-            : 'border border-transparent focus:ring-2 focus:ring-[var(--color-primary)] focus:border-transparent'
-        }`}
+        className={`w-full px-3.5 py-2.5 bg-[var(--color-surface-raised)] shadow-[var(--shadow-inset)] rounded-[var(--radius-md)] text-sm font-normal text-[var(--color-text-primary)] placeholder-[var(--color-text-muted)] focus:outline-none transition-all duration-150 ${errors[name]
+          ? 'ring-2 ring-[var(--color-danger)] border-transparent'
+          : 'border border-transparent focus:ring-2 focus:ring-[var(--color-primary)] focus:border-transparent'
+          }`}
       />
       {errors[name] && (
         <span className="text-xs font-normal text-[var(--color-danger)]">{errors[name]}</span>
@@ -168,39 +170,39 @@ export const UserFormModal = () => {
       <label htmlFor={name} className="text-[13px] font-medium text-[var(--color-text-secondary)]">
         {label}
       </label>
-      <select
-        id={name}
-        name={name}
-        value={value}
-        onChange={handleInputChange}
-        className="w-full px-3.5 py-2.5 bg-[var(--color-surface-raised)] shadow-[var(--shadow-inset)] border border-transparent rounded-[var(--radius-md)] text-sm font-normal text-[var(--color-text-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] transition-all duration-150 cursor-pointer appearance-none"
-      >
-        {options.map((opt) => (
-          <option key={opt.value} value={opt.value}>{opt.label}</option>
-        ))}
-      </select>
+      <div className="relative group/select">
+        <select
+          id={name}
+          name={name}
+          value={value}
+          onChange={handleInputChange}
+          className="w-full pl-3.5 pr-10 py-2.5 bg-[var(--color-surface-raised)] shadow-[var(--shadow-inset)] border border-transparent rounded-[var(--radius-md)] text-sm font-normal text-[var(--color-text-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] transition-all duration-150 cursor-pointer appearance-none"
+        >
+          {options.map((opt) => (
+            <option key={opt.value} value={opt.value}>{opt.label}</option>
+          ))}
+        </select>
+        <ChevronDown className="absolute right-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--color-text-muted)] pointer-events-none group-hover/select:text-[var(--color-text-primary)] transition-colors" />
+      </div>
     </div>
   );
 
   return (
     <>
-      {/* Backdrop */}
       <div
         className="animate-fade-in fixed inset-0 z-[var(--z-modal-backdrop)] flex items-center justify-center p-4 sm:p-8 bg-black/40 backdrop-blur-[2px]"
-        onClick={() => dispatch(closeModal())}
+        onClick={onClose}
       >
-        {/* Modal card */}
         <div
           className="animate-modal-in w-full max-w-2xl bg-[var(--color-surface)] rounded-[var(--radius-xl)] shadow-[var(--shadow-modal)] flex flex-col max-h-[90vh] overflow-hidden"
           onClick={(e) => e.stopPropagation()}
         >
-          {/* Header */}
           <div className="flex items-center justify-between px-8 py-5 border-b border-[var(--color-border)] shrink-0">
             <h2 className="text-lg font-bold text-[var(--color-text-primary)]">
               {isEditMode ? 'Edit User' : 'Add New User'}
             </h2>
             <button
-              onClick={() => dispatch(closeModal())}
+              onClick={onClose}
               className="p-1.5 rounded-[var(--radius-sm)] text-[#6b7280] hover:text-[var(--color-text-primary)] hover:bg-[var(--color-surface-raised)] transition-all duration-[120ms] active:scale-[0.95]"
               aria-label="Close modal"
             >
@@ -208,11 +210,8 @@ export const UserFormModal = () => {
             </button>
           </div>
 
-          {/* Form Body */}
           <div className="flex-1 overflow-y-auto px-8 py-6">
             <form id="user-form" onSubmit={handleSubmit}>
-              
-              {/* Section: Basic */}
               <div className="mb-10">
                 <div className="flex items-center gap-3 mb-6">
                   <div className="w-0.5 h-5 bg-[var(--color-text-primary)] rounded-full" />
@@ -231,13 +230,12 @@ export const UserFormModal = () => {
                   {renderSelect('Role', 'role', formData.role, [
                     { value: 'user', label: 'User' },
                     { value: 'admin', label: 'Admin' },
-                    { value: 'editor', label: 'Editor' },
+                    { value: 'moderator', label: 'Moderator' },
                   ])}
                   {renderInput('Profile Image URL', 'image', 'text', formData.image ?? '')}
                 </div>
               </div>
 
-              {/* Section: Address */}
               <div className="mb-10">
                 <div className="flex items-center gap-3 mb-6">
                   <div className="w-0.5 h-5 bg-[var(--color-text-primary)] rounded-full" />
@@ -251,7 +249,6 @@ export const UserFormModal = () => {
                 </div>
               </div>
 
-              {/* Section: Company */}
               <div className="mb-4">
                 <div className="flex items-center gap-3 mb-6">
                   <div className="w-0.5 h-5 bg-[var(--color-text-primary)] rounded-full" />
@@ -268,11 +265,10 @@ export const UserFormModal = () => {
             </form>
           </div>
 
-          {/* Footer */}
           <div className="px-8 py-5 border-t border-[var(--color-border)] flex justify-end gap-3 shrink-0">
             <button
               type="button"
-              onClick={() => dispatch(closeModal())}
+              onClick={onClose}
               disabled={isSubmitting}
               className="px-4 py-2 text-sm font-medium rounded-[var(--radius-sm)] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:bg-[var(--color-surface-raised)] disabled:opacity-50 transition-all duration-[var(--transition-fast)] active:scale-[0.98]"
             >

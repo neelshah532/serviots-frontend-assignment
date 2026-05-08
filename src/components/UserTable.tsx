@@ -1,11 +1,14 @@
 import { Edit2, Eye, Trash2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import type { IUser } from '../types/user.types';
-import { useAppDispatch } from '../store/hooks';
-import { openEditModal, openConfirmDialog } from '../store/userSlice';
+import type { IUser, SortField, SortDirection } from '../types/user.types';
 
 interface IUserTableProps {
   users: IUser[];
+  sortField: SortField;
+  sortDirection: SortDirection;
+  onSort: (field: SortField) => void;
+  onEdit: (user: IUser) => void;
+  onDelete: (user: IUser) => void;
 }
 const getAvatarStyle = (name: string): React.CSSProperties => {
   const hues = [210, 160, 270, 30, 340, 190];
@@ -32,15 +35,18 @@ const getRoleBadgeClass = (role: string): string => {
   }
 };
 
-export const UserTable = ({ users }: IUserTableProps) => {
-  const dispatch = useAppDispatch();
-
+export const UserTable = ({ users, sortField, sortDirection, onSort, onEdit, onDelete }: IUserTableProps) => {
   return (
     <div className="w-full overflow-x-auto rounded-[var(--radius-lg)] bg-[var(--color-surface)] shadow-[var(--shadow-sm)] border border-[var(--color-border)]">
       <table className="w-full text-sm text-left whitespace-nowrap">
         <thead>
           <tr className="border-b border-[var(--color-border)]">
-            <th className="px-6 py-4 text-[11px] font-bold text-[var(--color-text-muted)] tracking-wider uppercase">User</th>
+            <th 
+              onClick={() => onSort('name')}
+              className="px-6 py-4 text-[11px] font-bold text-[var(--color-text-muted)] tracking-wider uppercase cursor-pointer hover:text-[var(--color-primary)] transition-colors"
+            >
+              User {sortField === 'name' && (sortDirection === 'asc' ? '↑' : '↓')}
+            </th>
             <th className="px-6 py-4 text-[11px] font-bold text-[var(--color-text-muted)] tracking-wider uppercase">Contact</th>
             <th className="px-6 py-4 text-[11px] font-bold text-[var(--color-text-muted)] tracking-wider uppercase hidden lg:table-cell">Company</th>
             <th className="px-6 py-4 text-[11px] font-bold text-[var(--color-text-muted)] tracking-wider uppercase">Role</th>
@@ -97,21 +103,22 @@ export const UserTable = ({ users }: IUserTableProps) => {
                 <td className="px-6 py-3.5">
                   <div className="flex items-center justify-end gap-2">
                     <Link
-                      to={`/users/${user.id}`}
+                      to="/user-detail"
+                      state={{ userId: user.id }}
                       className="p-1.5 rounded-[var(--radius-sm)] text-[#6b7280] hover:text-[var(--color-primary)] transition-colors duration-[120ms] active:scale-[0.92]"
                       aria-label="View user details"
                     >
                       <Eye className="w-[18px] h-[18px]" />
                     </Link>
                     <button
-                      onClick={() => dispatch(openEditModal(user))}
+                      onClick={() => onEdit(user)}
                       className="p-1.5 rounded-[var(--radius-sm)] text-[#6b7280] hover:text-[var(--color-primary)] transition-colors duration-[120ms] active:scale-[0.92]"
                       aria-label="Edit user"
                     >
                       <Edit2 className="w-[18px] h-[18px]" />
                     </button>
                     <button
-                      onClick={() => dispatch(openConfirmDialog(user))}
+                      onClick={() => onDelete(user)}
                       className="p-1.5 rounded-[var(--radius-sm)] text-[#6b7280] hover:text-[#dc2626] transition-colors duration-0 active:scale-[0.92]"
                       aria-label="Delete user"
                     >

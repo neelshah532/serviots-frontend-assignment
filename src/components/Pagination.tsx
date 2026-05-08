@@ -1,20 +1,18 @@
 import { ChevronLeft, ChevronRight, MoreHorizontal } from 'lucide-react';
-import { useAppDispatch } from '../store/hooks';
-import { setFilters } from '../store/userSlice';
 import { PAGINATION_LIMIT } from '../constants/app.constants';
 
 interface IPaginationProps {
   currentPage: number;
   totalItems: number;
+  onPageChange: (page: number) => void;
 }
 
-export const Pagination = ({ currentPage, totalItems }: IPaginationProps) => {
-  const dispatch = useAppDispatch();
+export const Pagination = ({ currentPage, totalItems, onPageChange }: IPaginationProps) => {
   const totalPages = Math.max(1, Math.ceil(totalItems / PAGINATION_LIMIT));
 
   const handlePageChange = (page: number) => {
     if (page >= 1 && page <= totalPages && page !== currentPage) {
-      dispatch(setFilters({ currentPage: page }));
+      onPageChange(page);
     }
   };
 

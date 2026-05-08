@@ -1,11 +1,10 @@
 import { Edit2, Eye, Trash2, Mail, Phone, Building2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import type { IUser } from '../types/user.types';
-import { useAppDispatch } from '../store/hooks';
-import { openEditModal, openConfirmDialog } from '../store/userSlice';
-
 interface IUserCardProps {
   user: IUser;
+  onEdit: (user: IUser) => void;
+  onDelete: (user: IUser) => void;
 }
 
 const getAvatarStyle = (name: string): React.CSSProperties => {
@@ -29,9 +28,7 @@ const getRoleBadgeClass = (role: string): string => {
   }
 };
 
-export const UserCard = ({ user }: IUserCardProps) => {
-  const dispatch = useAppDispatch();
-
+export const UserCard = ({ user, onEdit, onDelete }: IUserCardProps) => {
   return (
     <div className="flex flex-col bg-[var(--color-surface)] rounded-[var(--radius-xl)] shadow-[var(--shadow-sm)] overflow-hidden transition-all duration-300 ease-out hover:-translate-y-0.5 hover:shadow-[var(--shadow-lg)]">
       <div className="p-6 flex flex-col gap-5">
@@ -67,13 +64,17 @@ export const UserCard = ({ user }: IUserCardProps) => {
         </div>
       </div>
       <div className="grid grid-cols-3 border-t border-[var(--color-border)]">
-        <Link to={`/users/${user.id}`} className="flex items-center justify-center gap-1.5 py-3 text-[#6b7280] hover:text-[var(--color-primary)] hover:bg-[var(--color-primary-light)] transition-all duration-[120ms] active:scale-[0.98]">
+        <Link 
+          to="/user-detail" 
+          state={{ userId: user.id }}
+          className="flex items-center justify-center gap-1.5 py-3 text-[#6b7280] hover:text-[var(--color-primary)] hover:bg-[var(--color-primary-light)] transition-all duration-[120ms] active:scale-[0.98]"
+        >
           <Eye className="w-3.5 h-3.5" /><span className="text-[11px] font-medium tracking-wide">View</span>
         </Link>
-        <button onClick={() => dispatch(openEditModal(user))} className="flex items-center justify-center gap-1.5 py-3 text-[#6b7280] hover:text-[var(--color-primary)] hover:bg-[var(--color-primary-light)] transition-all duration-[120ms] active:scale-[0.98] border-x border-[var(--color-border)]">
+        <button onClick={() => onEdit(user)} className="flex items-center justify-center gap-1.5 py-3 text-[#6b7280] hover:text-[var(--color-primary)] hover:bg-[var(--color-primary-light)] transition-all duration-[120ms] active:scale-[0.98] border-x border-[var(--color-border)]">
           <Edit2 className="w-3.5 h-3.5" /><span className="text-[11px] font-medium tracking-wide">Edit</span>
         </button>
-        <button onClick={() => dispatch(openConfirmDialog(user))} className="flex items-center justify-center gap-1.5 py-3 text-[#6b7280] hover:text-[var(--color-danger)] hover:bg-[var(--color-danger-light)] transition-all duration-0 active:scale-[0.98]">
+        <button onClick={() => onDelete(user)} className="flex items-center justify-center gap-1.5 py-3 text-[#6b7280] hover:text-[var(--color-danger)] hover:bg-[var(--color-danger-light)] transition-all duration-0 active:scale-[0.98]">
           <Trash2 className="w-3.5 h-3.5" /><span className="text-[11px] font-medium tracking-wide">Delete</span>
         </button>
       </div>

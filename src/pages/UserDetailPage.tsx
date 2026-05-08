@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useParams, Link, useNavigate } from 'react-router-dom';
+import { useLocation, Link, useNavigate } from 'react-router-dom';
 import { ArrowLeft, Building2, MapPin, GraduationCap, Briefcase } from 'lucide-react';
 import { useUserDetail } from '../hooks/useUserDetail';
 import { SkeletonLoader } from '../components/SkeletonLoader';
@@ -42,7 +42,8 @@ const InfoRow = ({ label, value }: { label: string; value: React.ReactNode }) =>
 );
 
 export const UserDetailPage = () => {
-  const { id } = useParams<{ id: string }>();
+  const location = useLocation();
+  const id = location.state?.userId;
   const navigate = useNavigate();
   const { user } = useUserDetail(id);
   const [isLoading, setIsLoading] = useState(true);
@@ -80,7 +81,6 @@ export const UserDetailPage = () => {
         <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />Back to Users
       </Link>
       <div className="flex flex-col gap-10">
-        {/* Profile Header */}
         <div className="flex flex-col sm:flex-row items-center sm:items-start gap-7 pb-10 border-b border-[var(--color-border)]">
           <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full flex items-center justify-center font-bold text-3xl shrink-0 shadow-[var(--shadow-sm)]" style={getAvatarStyle(user.firstName + user.lastName)}>
             {user.firstName.charAt(0).toUpperCase()}
@@ -96,8 +96,6 @@ export const UserDetailPage = () => {
             </p>
           </div>
         </div>
-
-        {/* Content Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <InfoCard title="Basic Information" icon={Briefcase}>
             <InfoRow label="Email" value={user.email} />

@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { useAppSelector } from '../store/hooks';
+import { useAppSelector } from '../redux/store/hooks';
 
 export const useUserDetail = (id: string | undefined) => {
   const users = useAppSelector((state) => state.user.users);
