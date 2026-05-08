@@ -1,10 +1,9 @@
 import { useState, useEffect } from 'react';
 import { Moon, Sun } from 'lucide-react';
-import { Outlet, Link, useLocation } from 'react-router-dom';
+import { Outlet, Link } from 'react-router-dom';
 import { ToastContainer, UserFormModal, ConfirmDialog } from '../../components';
 
 export const AppLayout = () => {
-  const location = useLocation();
   const [isDarkMode, setIsDarkMode] = useState(false);
 
   useEffect(() => {

@@ -125,7 +125,7 @@ export const UsersListPage = () => {
         ) : (
           <div className="flex flex-col gap-6">
             {viewMode === 'table' ? (
-              <UserTable users={paginatedUsers} sortField={filters.sortField} sortDirection={filters.sortDirection} onSort={handleSort} />
+              <UserTable users={paginatedUsers} />
             ) : (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
                 {paginatedUsers.map((user) => {

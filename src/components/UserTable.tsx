@@ -1,6 +1,6 @@
 import { Edit2, Eye, Trash2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import type { IUser, SortField, SortDirection } from '../types/user.types';
+import type { IUser } from '../types/user.types';
 import { useAppDispatch } from '../store/hooks';
 import { openEditModal, openConfirmDialog } from '../store/userSlice';
 
