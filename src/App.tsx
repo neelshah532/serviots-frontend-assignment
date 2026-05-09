@@ -5,14 +5,15 @@ import './index.css';
 
 function App() {
   return (
-    <Routes>
-      <Route path="/" element={<AppLayout />}>
-        <Route index element={<UsersListPage />} />
-        <Route path="users" element={<UsersListPage />} />
-        <Route path="users/:id" element={<UserDetailPage />} />
+    // No auth-protected routes exist — all routes are public,
+    // so routing is defined directly in App.tsx instead of a separate routes file.
+    <AppLayout>
+      <Routes>
+        <Route path="/" element={<UsersListPage />} />
+        <Route path="user-detail" element={<UserDetailPage />} />
         <Route path="*" element={<NotFoundPage />} />
-      </Route>
-    </Routes>
+      </Routes>
+    </AppLayout>
   );
 }
 

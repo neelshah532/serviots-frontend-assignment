@@ -1,73 +1,96 @@
-# React + TypeScript + Vite
+# User Management Dashboard (Frontend)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A premium, high-fidelity User Management Dashboard built with React 19, Vite, and Redux Toolkit. This application features a professional design system with high-contrast accessibility, smooth micro-interactions, and robust state management.
 
-Currently, two official plugins are available:
+## 🚀 Quick Start
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+### Prerequisites
+- **Node.js**: v18.x or higher
+- **npm**: v9.x or higher
 
-## React Compiler
+### Installation
+```bash
+# Clone the repository (if applicable)
+# git clone <repository-url>
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+# Navigate to the frontend directory
+cd frontend-task
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+# Install dependencies
+npm install or npm i --force
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### Running the Application
+```bash
+# Start the development server
+npm run dev
 ```
+The application will be available at `http://localhost:5173`.
+
+### Building for Production
+```bash
+# Create a production build
+npm run build
+
+# Preview the production build
+npm run preview
+```
+
+## 🛠 Tech Stack
+
+- **Core**: React 19, TypeScript
+- **Build Tool**: Vite
+- **State Management**: Redux Toolkit (Async Thunks)
+- **Routing**: React Router 7
+- **Styling**: Tailwind CSS 4 (with modern CSS variables)
+- **Icons**: Lucide React
+- **HTTP Client**: Axios
+
+## ✨ Key Features Implemented
+
+- **Full CRUD Operations**: Create, Read, Update, and Delete users via a RESTful API integration.
+- **Advanced Filtering & Search**: Real-time server-side filtering by role and search by name/email.
+- **Dynamic Routing**: Detail views for individual users with state-aware navigation.
+- **Robust Error Boundary**: Centralized error handling and API response normalization.
+
+## 📂 Folder Structure
+
+- **`src/assets`**: Static assets including images, fonts, and global style tokens.
+- **`src/components`**: Reusable UI components like Modals, Buttons, and Form elements.
+- **`src/constants`**: Application-wide constants including API endpoints, configuration, and static text.
+- **`src/hooks`**: Custom React hooks for shared logic, lifecycle management, and UI states.
+- **`src/layouts`**: Structural layout components that wrap pages (e.g., AppLayout with Sidebar/Nav).
+- **`src/pages`**: Top-level route components representing full-screen views.
+- **`src/redux`**: Centralized state management including slices, async thunks, and store configuration.
+- **`src/services`**: API abstraction layer and Axios instance configurations.
+- **`src/types`**: Global and domain-specific TypeScript interfaces and type definitions.
+- **`src/utils`**: Pure utility functions for data formatting, error parsing, and API response normalization.
+
+## 🏗 Implementation Overview
+
+### 1. State Management (Redux Toolkit)
+The application uses a "Single Source of Truth" pattern via Redux. We implemented `createAsyncThunk` to handle asynchronous API lifecycles (pending, fulfilled, rejected). This ensures the UI stays reactive and consistent during data fetching.
+
+### 2. API Integration & Error Handling
+We built a robust API service layer using Axios. Key implementations include:
+- **Response Normalization**: A custom `handleApiResponse` utility to standardize backend data.
+- **Global Error Handling**: Centralized catch-all logic to provide user-friendly error messages and logging.
+- **Request Cancellation**: Implementation of `AbortController` to prevent race conditions during rapid filtering/searching.
+
+### 3. Component Architecture
+The UI is built with a focus on reusability and maintainability:
+- **Controlled Components**: Form inputs are strictly controlled to ensure data integrity.
+- **Memoization**: Strategic use of `React.memo`, `useMemo`, and `useCallback` to optimize rendering performance in large lists.
+- **Dynamic Modals**: A versatile modal system for User Creation and Editing to reduce code duplication.
+
+### 4. Styling & Design System
+We moved beyond standard boilerplate to create a "Pro Max" design:
+- **Tailwind CSS 4**: Leveraging the latest features like CSS variable integration and improved JIT compilation.
+- **Tactile UI**: Focus on micro-interactions, hover states, and transitions that make the app feel alive and premium.
+- **Accessibility**: High-contrast color palettes and semantic HTML ensure the dashboard is usable by everyone.
+
+### 5. Routing Strategy
+Using React Router 7, we implemented a state-aware routing system. This allows for deep linking into user details while maintaining context of the previous list view, improving the overall UX flow.
+
+---
+

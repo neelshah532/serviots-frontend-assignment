@@ -1,16 +1,6 @@
 import { useState, useEffect } from 'react';
+import type { IToast, ToastType } from '../types/global.types';
 
-export type ToastType = 'success' | 'error' | 'warning';
-
-export interface IToast {
-  id: string;
-  message: string;
-  description?: string;
-  type: ToastType;
-  isExiting?: boolean;
-}
-
-// Global state for toasts so they can be triggered from anywhere
 let toasts: IToast[] = [];
 let listeners: ((toasts: IToast[]) => void)[] = [];
 

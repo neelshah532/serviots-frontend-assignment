@@ -1,5 +1,5 @@
 import { CheckCircle, XCircle, AlertCircle, X } from 'lucide-react';
-import type { IToast } from '../hooks/useToast';
+import type { IToast } from '../types/global.types';
 
 interface IToastProps {
   toast: IToast;
