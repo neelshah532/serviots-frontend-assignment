@@ -140,7 +140,7 @@ export const UserFormModal = ({ isOpen, isEditMode, selectedUser, onClose, onSuc
     value: string | number
   ) => (
     <div className="flex flex-col gap-2 mb-6">
-      <label htmlFor={name} className="text-[13px] font-medium text-[var(--color-text-secondary)]">
+      <label htmlFor={name} className="text-[13px] font-medium text-(--color-text-secondary)">
         {label}
       </label>
       <input
@@ -149,13 +149,13 @@ export const UserFormModal = ({ isOpen, isEditMode, selectedUser, onClose, onSuc
         type={type}
         value={value}
         onChange={handleInputChange}
-        className={`w-full px-3.5 py-2.5 bg-[var(--color-surface-raised)] shadow-[var(--shadow-inset)] rounded-[var(--radius-md)] text-sm font-normal text-[var(--color-text-primary)] placeholder-[var(--color-text-muted)] focus:outline-none transition-all duration-150 ${errors[name]
-          ? 'ring-2 ring-[var(--color-danger)] border-transparent'
-          : 'border border-transparent focus:ring-2 focus:ring-[var(--color-primary)] focus:border-transparent'
+        className={`w-full px-3.5 py-2.5 bg-(--color-surface-raised) shadow-(--shadow-inset) rounded-(--radius-md) text-sm font-normal text-(--color-text-primary) placeholder-(--color-text-muted) focus:outline-none transition-all duration-150 ${errors[name]
+          ? 'ring-2 ring-(--color-danger) border-transparent'
+          : 'border border-transparent focus:ring-2 focus:ring-(--color-primary) focus:border-transparent'
           }`}
       />
       {errors[name] && (
-        <span className="text-xs font-normal text-[var(--color-danger)]">{errors[name]}</span>
+        <span className="text-xs font-normal text-(--color-danger)">{errors[name]}</span>
       )}
     </div>
   );
@@ -167,7 +167,7 @@ export const UserFormModal = ({ isOpen, isEditMode, selectedUser, onClose, onSuc
     options: { value: string; label: string }[]
   ) => (
     <div className="flex flex-col gap-2 mb-6">
-      <label htmlFor={name} className="text-[13px] font-medium text-[var(--color-text-secondary)]">
+      <label htmlFor={name} className="text-[13px] font-medium text-(--color-text-secondary)">
         {label}
       </label>
       <div className="relative group/select">
@@ -176,13 +176,13 @@ export const UserFormModal = ({ isOpen, isEditMode, selectedUser, onClose, onSuc
           name={name}
           value={value}
           onChange={handleInputChange}
-          className="w-full pl-3.5 pr-10 py-2.5 bg-[var(--color-surface-raised)] shadow-[var(--shadow-inset)] border border-transparent rounded-[var(--radius-md)] text-sm font-normal text-[var(--color-text-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] transition-all duration-150 cursor-pointer appearance-none"
+          className="w-full pl-3.5 pr-10 py-2.5 bg-(--color-surface-raised) shadow-(--shadow-inset) border border-transparent rounded-(--radius-md) text-sm font-normal text-(--color-text-primary) focus:outline-none focus:ring-2 focus:ring-(--color-primary) transition-all duration-150 cursor-pointer appearance-none"
         >
           {options.map((opt) => (
             <option key={opt.value} value={opt.value}>{opt.label}</option>
           ))}
         </select>
-        <ChevronDown className="absolute right-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--color-text-muted)] pointer-events-none group-hover/select:text-[var(--color-text-primary)] transition-colors" />
+        <ChevronDown className="absolute right-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-(--color-text-muted) pointer-events-none group-hover/select:text-(--color-text-primary) transition-colors" />
       </div>
     </div>
   );
@@ -190,20 +190,20 @@ export const UserFormModal = ({ isOpen, isEditMode, selectedUser, onClose, onSuc
   return (
     <>
       <div
-        className="animate-fade-in fixed inset-0 z-[var(--z-modal-backdrop)] flex items-center justify-center p-4 sm:p-8 bg-black/40 backdrop-blur-[2px]"
+        className="animate-fade-in fixed inset-0 z-(--z-modal-backdrop) flex items-center justify-center p-4 sm:p-8 bg-black/40 backdrop-blur-[2px]"
         onClick={onClose}
       >
         <div
-          className="animate-modal-in w-full max-w-2xl bg-[var(--color-surface)] rounded-[var(--radius-xl)] shadow-[var(--shadow-modal)] flex flex-col max-h-[90vh] overflow-hidden"
+          className="animate-modal-in w-full max-w-2xl bg-(--color-surface) rounded-(--radius-xl) shadow-(--shadow-modal) flex flex-col max-h-[90vh] overflow-hidden"
           onClick={(e) => e.stopPropagation()}
         >
-          <div className="flex items-center justify-between px-8 py-5 border-b border-[var(--color-border)] shrink-0">
-            <h2 className="text-lg font-bold text-[var(--color-text-primary)]">
+          <div className="flex items-center justify-between px-8 py-5 border-b border-(--color-border) shrink-0">
+            <h2 className="text-lg font-bold text-(--color-text-primary)">
               {isEditMode ? 'Edit User' : 'Add New User'}
             </h2>
             <button
               onClick={onClose}
-              className="p-1.5 rounded-[var(--radius-sm)] text-[#6b7280] hover:text-[var(--color-text-primary)] hover:bg-[var(--color-surface-raised)] transition-all duration-[120ms] active:scale-[0.95]"
+              className="p-1.5 rounded-(--radius-sm) text-[#6b7280] hover:text-(--color-text-primary) hover:bg-(--color-surface-raised) transition-all duration-[120ms] active:scale-[0.95]"
               aria-label="Close modal"
             >
               <X className="w-4 h-4" />
@@ -214,8 +214,8 @@ export const UserFormModal = ({ isOpen, isEditMode, selectedUser, onClose, onSuc
             <form id="user-form" onSubmit={handleSubmit}>
               <div className="mb-10">
                 <div className="flex items-center gap-3 mb-6">
-                  <div className="w-0.5 h-5 bg-[var(--color-text-primary)] rounded-full" />
-                  <h3 className="text-sm font-bold text-[var(--color-text-primary)]">Basic Information</h3>
+                  <div className="w-0.5 h-5 bg-(--color-text-primary) rounded-full" />
+                  <h3 className="text-sm font-bold text-(--color-text-primary)">Basic Information</h3>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6">
                   {renderInput('First Name', 'firstName', 'text', formData.firstName)}
@@ -238,8 +238,8 @@ export const UserFormModal = ({ isOpen, isEditMode, selectedUser, onClose, onSuc
 
               <div className="mb-10">
                 <div className="flex items-center gap-3 mb-6">
-                  <div className="w-0.5 h-5 bg-[var(--color-text-primary)] rounded-full" />
-                  <h3 className="text-sm font-bold text-[var(--color-text-primary)]">Address</h3>
+                  <div className="w-0.5 h-5 bg-(--color-text-primary) rounded-full" />
+                  <h3 className="text-sm font-bold text-(--color-text-primary)">Address</h3>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6">
                   {renderInput('Street', 'address.address', 'text', formData.address.address)}
@@ -251,8 +251,8 @@ export const UserFormModal = ({ isOpen, isEditMode, selectedUser, onClose, onSuc
 
               <div className="mb-4">
                 <div className="flex items-center gap-3 mb-6">
-                  <div className="w-0.5 h-5 bg-[var(--color-text-primary)] rounded-full" />
-                  <h3 className="text-sm font-bold text-[var(--color-text-primary)]">Company</h3>
+                  <div className="w-0.5 h-5 bg-(--color-text-primary) rounded-full" />
+                  <h3 className="text-sm font-bold text-(--color-text-primary)">Company</h3>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6">
                   {renderInput('Company Name', 'company.name', 'text', formData.company.name)}
@@ -265,12 +265,12 @@ export const UserFormModal = ({ isOpen, isEditMode, selectedUser, onClose, onSuc
             </form>
           </div>
 
-          <div className="px-8 py-5 border-t border-[var(--color-border)] flex justify-end gap-3 shrink-0">
+          <div className="px-8 py-5 border-t border-(--color-border) flex justify-end gap-3 shrink-0">
             <button
               type="button"
               onClick={onClose}
               disabled={isSubmitting}
-              className="px-4 py-2 text-sm font-medium rounded-[var(--radius-sm)] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:bg-[var(--color-surface-raised)] disabled:opacity-50 transition-all duration-[var(--transition-fast)] active:scale-[0.98]"
+              className="px-4 py-2 text-sm font-medium rounded-(--radius-sm) text-(--color-text-secondary) hover:text-(--color-text-primary) hover:bg-(--color-surface-raised) disabled:opacity-50 transition-all duration-(--transition-fast) active:scale-[0.98]"
             >
               Cancel
             </button>
@@ -278,10 +278,10 @@ export const UserFormModal = ({ isOpen, isEditMode, selectedUser, onClose, onSuc
               type="submit"
               form="user-form"
               disabled={isSubmitting}
-              className="px-6 py-2 text-sm font-medium rounded-[var(--radius-sm)] text-[var(--color-text-inverse)] bg-[var(--color-primary)] hover:-translate-y-px hover:shadow-[var(--shadow-md)] shadow-[var(--shadow-xs)] disabled:opacity-60 disabled:cursor-not-allowed transition-all duration-[var(--transition-fast)] active:scale-[0.98] flex items-center justify-center min-w-[110px]"
+              className="px-6 py-2 text-sm font-medium rounded-(--radius-sm) text-(--color-text-inverse) bg-(--color-primary) hover:-translate-y-px hover:shadow-(--shadow-md) shadow-(--shadow-xs) disabled:opacity-60 disabled:cursor-not-allowed transition-all duration-(--transition-fast) active:scale-[0.98] flex items-center justify-center min-w-[110px]"
             >
               {isSubmitting ? (
-                <div className="w-4 h-4 border-2 border-[var(--color-text-inverse)]/30 border-t-[var(--color-text-inverse)] rounded-full animate-spin" />
+                <div className="w-4 h-4 border-2 border-(--color-text-inverse)/30 border-t-(--color-text-inverse) rounded-full animate-spin" />
               ) : isEditMode ? (
                 'Save Changes'
               ) : (

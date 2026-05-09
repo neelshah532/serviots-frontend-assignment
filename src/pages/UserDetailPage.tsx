@@ -23,12 +23,12 @@ const getRoleBadgeClass = (role: string): string => {
 };
 
 const InfoCard = ({ title, children, icon: Icon }: { title: string; children: React.ReactNode; icon: React.ElementType }) => (
-  <div className="bg-[var(--color-surface)] rounded-[var(--radius-xl)] p-7 shadow-[var(--shadow-sm)] hover:shadow-[var(--shadow-md)] transition-shadow duration-300">
-    <div className="flex items-center gap-3 mb-5 pb-4 border-b border-[var(--color-border-subtle)]">
-      <div className="w-8 h-8 rounded-[var(--radius-md)] bg-[var(--color-surface-raised)] text-[#6b7280] flex items-center justify-center">
+  <div className="bg-(--color-surface) rounded-(--radius-xl) p-7 shadow-(--shadow-sm) hover:shadow-(--shadow-md) transition-shadow duration-300">
+    <div className="flex items-center gap-3 mb-5 pb-4 border-b border-(--color-border-subtle)">
+      <div className="w-8 h-8 rounded-(--radius-md) bg-(--color-surface-raised) text-[#6b7280] flex items-center justify-center">
         <Icon className="w-4 h-4" />
       </div>
-      <h3 className="font-bold text-[var(--color-text-primary)]">{title}</h3>
+      <h3 className="font-bold text-(--color-text-primary)">{title}</h3>
     </div>
     <div className="space-y-4">{children}</div>
   </div>
@@ -36,8 +36,8 @@ const InfoCard = ({ title, children, icon: Icon }: { title: string; children: Re
 
 const InfoRow = ({ label, value }: { label: string; value: React.ReactNode }) => (
   <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-4 justify-between">
-    <span className="text-sm font-medium text-[var(--color-text-muted)]">{label}</span>
-    <span className="text-sm font-medium text-[var(--color-text-primary)] text-left sm:text-right">{value}</span>
+    <span className="text-sm font-medium text-(--color-text-muted)">{label}</span>
+    <span className="text-sm font-medium text-(--color-text-primary) text-left sm:text-right">{value}</span>
   </div>
 );
 
@@ -56,7 +56,7 @@ export const UserDetailPage = () => {
   if (isLoading) {
     return (
       <div className="w-full max-w-4xl mx-auto">
-        <Link to="/" className="inline-flex items-center gap-2 text-sm font-medium text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] transition-colors duration-[120ms] mb-8 group">
+        <Link to="/" className="inline-flex items-center gap-2 text-sm font-medium text-(--color-text-secondary) hover:text-(--color-text-primary) transition-colors duration-[120ms] mb-8 group">
           <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />Back to Users
         </Link>
         <SkeletonLoader type="detail" />
@@ -67,32 +67,32 @@ export const UserDetailPage = () => {
   if (!user) {
     return (
       <div className="flex flex-col items-center justify-center py-24 text-center">
-        <div className="w-14 h-14 bg-[var(--color-danger-light)] text-[var(--color-danger)] rounded-full flex items-center justify-center mb-5"><Briefcase className="w-6 h-6" /></div>
-        <h2 className="text-xl font-bold text-[var(--color-text-primary)]">User Not Found</h2>
-        <p className="text-sm text-[var(--color-text-secondary)] mt-2 mb-8 max-w-sm">The user does not exist or may have been deleted.</p>
-        <button onClick={() => navigate('/')} className="px-5 py-2 bg-[var(--color-primary)] text-[var(--color-text-inverse)] rounded-[var(--radius-sm)] text-sm font-medium shadow-[var(--shadow-xs)] hover:-translate-y-px hover:shadow-[var(--shadow-md)] transition-all duration-[120ms] active:scale-[0.98]">Go Back</button>
+        <div className="w-14 h-14 bg-(--color-danger-light) text-(--color-danger) rounded-full flex items-center justify-center mb-5"><Briefcase className="w-6 h-6" /></div>
+        <h2 className="text-xl font-bold text-(--color-text-primary)">User Not Found</h2>
+        <p className="text-sm text-(--color-text-secondary) mt-2 mb-8 max-w-sm">The user does not exist or may have been deleted.</p>
+        <button onClick={() => navigate('/')} className="px-5 py-2 bg-(--color-primary) text-(--color-text-inverse) rounded-(--radius-sm) text-sm font-medium shadow-(--shadow-xs) hover:-translate-y-px hover:shadow-(--shadow-md) transition-all duration-[120ms] active:scale-[0.98]">Go Back</button>
       </div>
     );
   }
 
   return (
     <div className="w-full max-w-4xl mx-auto">
-      <Link to="/" className="inline-flex items-center gap-2 text-sm font-medium text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] transition-colors duration-[120ms] mb-8 group">
+      <Link to="/" className="inline-flex items-center gap-2 text-sm font-medium text-(--color-text-secondary) hover:text-(--color-text-primary) transition-colors duration-[120ms] mb-8 group">
         <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />Back to Users
       </Link>
       <div className="flex flex-col gap-10">
-        <div className="flex flex-col sm:flex-row items-center sm:items-start gap-7 pb-10 border-b border-[var(--color-border)]">
-          <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full flex items-center justify-center font-bold text-3xl shrink-0 shadow-[var(--shadow-sm)]" style={getAvatarStyle(user.firstName + user.lastName)}>
+        <div className="flex flex-col sm:flex-row items-center sm:items-start gap-7 pb-10 border-b border-(--color-border)">
+          <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full flex items-center justify-center font-bold text-3xl shrink-0 shadow-(--shadow-sm)" style={getAvatarStyle(user.firstName + user.lastName)}>
             {user.firstName.charAt(0).toUpperCase()}
           </div>
           <div className="flex flex-col items-center sm:items-start text-center sm:text-left pt-1">
             <div className="flex flex-col sm:flex-row items-center gap-3">
-              <h1 className="text-2xl font-bold text-[var(--color-text-primary)] tracking-tight">{user.firstName} {user.lastName}</h1>
-              <span className={`px-2.5 py-0.5 rounded-[var(--radius-sm)] text-xs font-medium capitalize border ${getRoleBadgeClass(user.role)}`}>{user.role}</span>
+              <h1 className="text-2xl font-bold text-(--color-text-primary) tracking-tight">{user.firstName} {user.lastName}</h1>
+              <span className={`px-2.5 py-0.5 rounded-(--radius-sm) text-xs font-medium capitalize border ${getRoleBadgeClass(user.role)}`}>{user.role}</span>
             </div>
-            <p className="text-[var(--color-text-secondary)] mt-2 flex items-center gap-2 text-sm">
+            <p className="text-(--color-text-secondary) mt-2 flex items-center gap-2 text-sm">
               <Briefcase className="w-4 h-4 text-[#6b7280]" />
-              {user.company.title} at <span className="font-medium text-[var(--color-text-primary)]">{user.company.name}</span>
+              {user.company.title} at <span className="font-medium text-(--color-text-primary)">{user.company.name}</span>
             </p>
           </div>
         </div>

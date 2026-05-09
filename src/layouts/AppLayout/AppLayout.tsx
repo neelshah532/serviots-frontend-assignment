@@ -38,11 +38,11 @@ export const AppLayout = ({ children }: { children?: React.ReactNode }) => {
 
 
   return (
-    <div className="min-h-screen flex flex-col bg-[var(--color-background)]">
-      <header className="sticky top-0 z-[var(--z-header)] h-14 bg-[var(--color-surface)]/90 backdrop-blur-md border-b border-[var(--color-border)] transition-colors">
+    <div className="min-h-screen flex flex-col bg-(--color-background)">
+      <header className="sticky top-0 z-(--z-header) h-14 bg-(--color-surface)/90 backdrop-blur-md border-b border-(--color-border) transition-colors">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center justify-between">
           <Link to="/" className="flex items-center gap-2 group">
-            <span className="font-bold text-[16px] text-[var(--color-text-primary)] tracking-tight">
+            <span className="font-bold text-[16px] text-(--color-text-primary) tracking-tight">
               Users Directory
             </span>
           </Link>
@@ -50,7 +50,7 @@ export const AppLayout = ({ children }: { children?: React.ReactNode }) => {
           <div className="flex items-center gap-3">
             <button
               onClick={toggleDarkMode}
-              className="p-2 rounded-full border border-[var(--color-border)] text-[var(--color-text-primary)] hover:bg-[var(--color-surface-raised)] transition-all duration-[120ms] active:scale-[0.95] focus:outline-none"
+              className="p-2 rounded-full border border-(--color-border) text-(--color-text-primary) hover:bg-(--color-surface-raised) transition-all duration-[120ms] active:scale-[0.95] focus:outline-none"
               aria-label="Toggle dark mode"
             >
               {isDarkMode ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}

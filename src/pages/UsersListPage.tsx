@@ -88,24 +88,24 @@ export const UsersListPage = () => {
     <div className="flex flex-col gap-8">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
         <div>
-          <h1 className="text-2xl font-bold text-[var(--color-text-primary)] tracking-tight">User Management</h1>
-          <p className="text-[var(--color-text-secondary)] mt-1.5 text-sm">Manage your team members and their account permissions.</p>
+          <h1 className="text-2xl font-bold text-(--color-text-primary) tracking-tight">User Management</h1>
+          <p className="text-(--color-text-secondary) mt-1.5 text-sm">Manage your team members and their account permissions.</p>
         </div>
         <button
           onClick={handleOpenCreateModal}
-          className="flex items-center justify-center gap-2 px-5 py-2.5 bg-[var(--color-primary)] text-[var(--color-text-inverse)] rounded-[var(--radius-md)] text-[13.5px] font-semibold shadow-[var(--shadow-md)] hover:-translate-y-px hover:shadow-[var(--shadow-lg)] transition-all duration-[var(--transition-fast)] active:scale-[0.98]"
+          className="flex items-center justify-center gap-2 px-5 py-2.5 bg-(--color-primary) text-(--color-text-inverse) rounded-(--radius-md) text-[13.5px] font-semibold shadow-(--shadow-md) hover:-translate-y-px hover:shadow-(--shadow-lg) transition-all duration-(--transition-fast) active:scale-[0.98]"
         >
           <Plus className="w-4 h-4" />
           <span>Add New User</span>
         </button>
       </div>
-      <div className="flex flex-col lg:flex-row gap-5 p-5 bg-[var(--color-surface)] rounded-[var(--radius-xl)] shadow-[var(--shadow-sm)] border border-[var(--color-border)]">
+      <div className="flex flex-col lg:flex-row gap-5 p-5 bg-(--color-surface) rounded-(--radius-xl) shadow-(--shadow-sm) border border-(--color-border)">
         <div className="relative flex-1 group">
-          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4.5 h-4.5 text-[var(--color-text-muted)] group-focus-within:text-[var(--color-primary)] transition-colors duration-200" />
+          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4.5 h-4.5 text-(--color-text-muted) group-focus-within:text-(--color-primary) transition-colors duration-200" />
           <input
             type="text"
             placeholder="Search by name, email..."
-            className="w-full pl-11 pr-4 py-2.5 bg-[var(--color-surface-raised)] border border-transparent rounded-[var(--radius-lg)] text-[14px] text-[var(--color-text-primary)] placeholder-[var(--color-text-muted)] focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] transition-all duration-200"
+            className="w-full pl-11 pr-4 py-2.5 bg-(--color-surface-raised) border border-transparent rounded-(--radius-lg) text-[14px] text-(--color-text-primary) placeholder-(--color-text-muted) focus:outline-none focus:ring-2 focus:ring-(--color-primary) transition-all duration-200"
             value={searchInput}
             onChange={(e) => setSearchInput(e.target.value)}
           />
@@ -116,52 +116,52 @@ export const UsersListPage = () => {
             <select
               value={filters.roleFilter}
               onChange={(e) => dispatch(setFilters({ roleFilter: e.target.value }))}
-              className="appearance-none pl-3 pr-9 py-2 bg-[var(--color-surface-raised)] border border-[var(--color-border)] rounded-[var(--radius-md)] text-sm text-[var(--color-text-secondary)] focus:outline-none focus:ring-1 focus:ring-[var(--color-primary)] transition-all cursor-pointer min-w-[120px]"
+              className="appearance-none pl-3 pr-9 py-2 bg-(--color-surface-raised) border border-(--color-border) rounded-(--radius-md) text-sm text-(--color-text-secondary) focus:outline-none focus:ring-1 focus:ring-(--color-primary) transition-all cursor-pointer min-w-[120px]"
             >
               <option value="">All Roles</option>
               <option value="admin">Admin</option>
               <option value="moderator">Moderator</option>
               <option value="user">User</option>
             </select>
-            <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--color-text-muted)] pointer-events-none group-hover:text-[var(--color-text-primary)] transition-colors" />
+            <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-(--color-text-muted) pointer-events-none group-hover:text-(--color-text-primary) transition-colors" />
           </div>
 
           <div className="relative group">
             <select
               value={filters.genderFilter}
               onChange={(e) => dispatch(setFilters({ genderFilter: e.target.value as any }))}
-              className="appearance-none pl-3 pr-9 py-2 bg-[var(--color-surface-raised)] border border-[var(--color-border)] rounded-[var(--radius-md)] text-sm text-[var(--color-text-secondary)] focus:outline-none focus:ring-1 focus:ring-[var(--color-primary)] transition-all cursor-pointer min-w-[120px]"
+              className="appearance-none pl-3 pr-9 py-2 bg-(--color-surface-raised) border border-(--color-border) rounded-(--radius-md) text-sm text-(--color-text-secondary) focus:outline-none focus:ring-1 focus:ring-(--color-primary) transition-all cursor-pointer min-w-[120px]"
             >
               <option value="all">All Genders</option>
               <option value="male">Male</option>
               <option value="female">Female</option>
             </select>
-            <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--color-text-muted)] pointer-events-none group-hover:text-[var(--color-text-primary)] transition-colors" />
+            <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-(--color-text-muted) pointer-events-none group-hover:text-(--color-text-primary) transition-colors" />
           </div>
 
           <div className="relative group">
             <select
               value={filters.sortField}
               onChange={(e) => handleSort(e.target.value as any)}
-              className="appearance-none pl-3 pr-9 py-2 bg-[var(--color-surface-raised)] border border-[var(--color-border)] rounded-[var(--radius-md)] text-sm text-[var(--color-text-secondary)] focus:outline-none focus:ring-1 focus:ring-[var(--color-primary)] transition-all cursor-pointer min-w-[140px]"
+              className="appearance-none pl-3 pr-9 py-2 bg-(--color-surface-raised) border border-(--color-border) rounded-(--radius-md) text-sm text-(--color-text-secondary) focus:outline-none focus:ring-1 focus:ring-(--color-primary) transition-all cursor-pointer min-w-[140px]"
             >
               <option value="name">Sort by Name</option>
               <option value="age">Sort by Age</option>
             </select>
-            <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--color-text-muted)] pointer-events-none group-hover:text-[var(--color-text-primary)] transition-colors" />
+            <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-(--color-text-muted) pointer-events-none group-hover:text-(--color-text-primary) transition-colors" />
           </div>
 
-          <div className="flex items-center gap-1 p-1 bg-[var(--color-surface-raised)] rounded-[var(--radius-lg)] border border-[var(--color-border-subtle)]">
+          <div className="flex items-center gap-1 p-1 bg-(--color-surface-raised) rounded-(--radius-lg) border border-(--color-border-subtle)">
             <button
               onClick={() => setViewMode('table')}
-              className={`p-1.5 rounded-[var(--radius-md)] transition-all duration-200 ${viewMode === 'table' ? 'bg-[var(--color-surface)] text-[var(--color-primary)] shadow-[var(--shadow-sm)]' : 'text-[var(--color-text-muted)] hover:text-[var(--color-text-secondary)]'}`}
+              className={`p-1.5 rounded-(--radius-md) transition-all duration-200 ${viewMode === 'table' ? 'bg-(--color-surface) text-(--color-primary) shadow-(--shadow-sm)' : 'text-(--color-text-muted) hover:text-(--color-text-secondary)'}`}
               aria-label="Table view"
             >
               <List className="w-4.5 h-4.5" />
             </button>
             <button
               onClick={() => setViewMode('card')}
-              className={`p-1.5 rounded-[var(--radius-md)] transition-all duration-200 ${viewMode === 'card' ? 'bg-[var(--color-surface)] text-[var(--color-primary)] shadow-[var(--shadow-sm)]' : 'text-[var(--color-text-muted)] hover:text-[var(--color-text-secondary)]'}`}
+              className={`p-1.5 rounded-(--radius-md) transition-all duration-200 ${viewMode === 'card' ? 'bg-(--color-surface) text-(--color-primary) shadow-(--shadow-sm)' : 'text-(--color-text-muted) hover:text-(--color-text-secondary)'}`}
               aria-label="Grid view"
             >
               <LayoutGrid className="w-4.5 h-4.5" />
@@ -205,15 +205,15 @@ export const UsersListPage = () => {
           </div>
         </>
       ) : (
-        <div className="flex flex-col items-center justify-center py-20 px-6 text-center bg-[var(--color-surface)] rounded-[var(--radius-xl)] border border-dashed border-[var(--color-border)]">
-          <div className="w-16 h-16 bg-[var(--color-surface-raised)] text-[var(--color-text-muted)] rounded-full flex items-center justify-center mb-6">
+        <div className="flex flex-col items-center justify-center py-20 px-6 text-center bg-(--color-surface) rounded-(--radius-xl) border border-dashed border-(--color-border)">
+          <div className="w-16 h-16 bg-(--color-surface-raised) text-(--color-text-muted) rounded-full flex items-center justify-center mb-6">
             <Filter className="w-7 h-7" />
           </div>
-          <h3 className="text-lg font-bold text-[var(--color-text-primary)]">No users found</h3>
-          <p className="text-[var(--color-text-secondary)] mt-2 max-w-xs mx-auto text-sm leading-relaxed">We couldn't find any users matching your current filters. Try adjusting your search or filters.</p>
+          <h3 className="text-lg font-bold text-(--color-text-primary)">No users found</h3>
+          <p className="text-(--color-text-secondary) mt-2 max-w-xs mx-auto text-sm leading-relaxed">We couldn't find any users matching your current filters. Try adjusting your search or filters.</p>
           <button
             onClick={() => { setSearchInput(''); dispatch(setFilters({ searchQuery: '', roleFilter: '', genderFilter: 'all', currentPage: 1 })); }}
-            className="mt-8 text-sm font-semibold text-[var(--color-primary)] hover:underline active:opacity-70 transition-all"
+            className="mt-8 text-sm font-semibold text-(--color-primary) hover:underline active:opacity-70 transition-all"
           >
             Clear all filters
           </button>

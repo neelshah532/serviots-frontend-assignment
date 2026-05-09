@@ -30,51 +30,51 @@ const getRoleBadgeClass = (role: string): string => {
 
 export const UserCard = ({ user, onEdit, onDelete }: IUserCardProps) => {
   return (
-    <div className="flex flex-col bg-[var(--color-surface)] rounded-[var(--radius-xl)] shadow-[var(--shadow-sm)] overflow-hidden transition-all duration-300 ease-out hover:-translate-y-0.5 hover:shadow-[var(--shadow-lg)]">
+    <div className="flex flex-col bg-(--color-surface) rounded-(--radius-xl) shadow-(--shadow-sm) overflow-hidden transition-all duration-300 ease-out hover:-translate-y-0.5 hover:shadow-(--shadow-lg)">
       <div className="p-6 flex flex-col gap-5">
         <div className="flex items-center gap-3.5">
           <div className="w-11 h-11 rounded-full flex items-center justify-center font-bold text-base shrink-0" style={getAvatarStyle(user.firstName + user.lastName)}>
             {user.firstName.charAt(0).toUpperCase()}
           </div>
           <div className="flex flex-col min-w-0">
-            <h3 className="font-bold text-base text-[var(--color-text-primary)] leading-tight truncate">{user.firstName} {user.lastName}</h3>
+            <h3 className="font-bold text-base text-(--color-text-primary) leading-tight truncate">{user.firstName} {user.lastName}</h3>
             <div className="flex items-center gap-2 mt-1">
-              <span className="text-xs text-[var(--color-text-muted)] capitalize">{user.gender}, {user.age}</span>
-              <span className="w-0.5 h-0.5 rounded-full bg-[var(--color-text-muted)]" />
-              <span className={`inline-flex px-2 py-px rounded-[var(--radius-sm)] text-[10px] font-medium capitalize border ${getRoleBadgeClass(user.role)}`}>{user.role}</span>
+              <span className="text-xs text-(--color-text-muted) capitalize">{user.gender}, {user.age}</span>
+              <span className="w-0.5 h-0.5 rounded-full bg-(--color-text-muted)" />
+              <span className={`inline-flex px-2 py-px rounded-(--radius-sm) text-[10px] font-medium capitalize border ${getRoleBadgeClass(user.role)}`}>{user.role}</span>
             </div>
           </div>
         </div>
-        <div className="flex flex-col gap-2.5 pt-4 border-t border-[var(--color-border-subtle)]">
+        <div className="flex flex-col gap-2.5 pt-4 border-t border-(--color-border-subtle)">
           <div className="flex items-center gap-2.5 text-[13px]">
             <Mail className="w-3.5 h-3.5 text-[#6b7280] shrink-0" />
-            <span className="truncate text-[var(--color-text-secondary)]">{user.email}</span>
+            <span className="truncate text-(--color-text-secondary)">{user.email}</span>
           </div>
           <div className="flex items-center gap-2.5 text-[13px]">
             <Phone className="w-3.5 h-3.5 text-[#6b7280] shrink-0" />
-            <span className="text-[var(--color-text-secondary)]">{user.phone}</span>
+            <span className="text-(--color-text-secondary)">{user.phone}</span>
           </div>
           <div className="flex items-start gap-2.5 text-[13px]">
             <Building2 className="w-3.5 h-3.5 text-[#6b7280] shrink-0 mt-0.5" />
             <div className="flex flex-col leading-tight min-w-0">
-              <span className="font-medium text-[var(--color-text-secondary)] truncate">{user.company.name}</span>
-              <span className="text-xs text-[var(--color-text-muted)] truncate mt-0.5">{user.company.title}</span>
+              <span className="font-medium text-(--color-text-secondary) truncate">{user.company.name}</span>
+              <span className="text-xs text-(--color-text-muted) truncate mt-0.5">{user.company.title}</span>
             </div>
           </div>
         </div>
       </div>
-      <div className="grid grid-cols-3 border-t border-[var(--color-border)]">
+      <div className="grid grid-cols-3 border-t border-(--color-border)">
         <Link 
           to="/user-detail" 
           state={{ userId: user.id }}
-          className="flex items-center justify-center gap-1.5 py-3 text-[#6b7280] hover:text-[var(--color-primary)] hover:bg-[var(--color-primary-light)] transition-all duration-[120ms] active:scale-[0.98]"
+          className="flex items-center justify-center gap-1.5 py-3 text-[#6b7280] hover:text-(--color-primary) hover:bg-(--color-primary-light) transition-all duration-[120ms] active:scale-[0.98]"
         >
           <Eye className="w-3.5 h-3.5" /><span className="text-[11px] font-medium tracking-wide">View</span>
         </Link>
-        <button onClick={() => onEdit(user)} className="flex items-center justify-center gap-1.5 py-3 text-[#6b7280] hover:text-[var(--color-primary)] hover:bg-[var(--color-primary-light)] transition-all duration-[120ms] active:scale-[0.98] border-x border-[var(--color-border)]">
+        <button onClick={() => onEdit(user)} className="flex items-center justify-center gap-1.5 py-3 text-[#6b7280] hover:text-(--color-primary) hover:bg-(--color-primary-light) transition-all duration-[120ms] active:scale-[0.98] border-x border-(--color-border)">
           <Edit2 className="w-3.5 h-3.5" /><span className="text-[11px] font-medium tracking-wide">Edit</span>
         </button>
-        <button onClick={() => onDelete(user)} className="flex items-center justify-center gap-1.5 py-3 text-[#6b7280] hover:text-[var(--color-danger)] hover:bg-[var(--color-danger-light)] transition-all duration-0 active:scale-[0.98]">
+        <button onClick={() => onDelete(user)} className="flex items-center justify-center gap-1.5 py-3 text-[#6b7280] hover:text-(--color-danger) hover:bg-(--color-danger-light) transition-all duration-0 active:scale-[0.98]">
           <Trash2 className="w-3.5 h-3.5" /><span className="text-[11px] font-medium tracking-wide">Delete</span>
         </button>
       </div>
