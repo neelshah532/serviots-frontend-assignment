@@ -1,8 +1,9 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { X, ChevronDown } from 'lucide-react';
 import { useAppDispatch } from '../redux/store/hooks';
 import { UserCreate, UserUpdate } from '../redux/action/userSlice';
 import type { IUser, IUserFormData } from '../types/user.types';
+import { validateUserForm } from '../utils/userValidation';
 
 const INITIAL_FORM_DATA: IUserFormData = {
   firstName: '',
@@ -31,6 +32,22 @@ export const UserFormModal = ({ isOpen, isEditMode, selectedUser, onClose, onSuc
   const [formData, setFormData] = useState<IUserFormData>(INITIAL_FORM_DATA);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const isModifyContent = useMemo(() => {
+    const compareTo = isEditMode && selectedUser ? {
+      firstName: selectedUser.firstName,
+      lastName: selectedUser.lastName,
+      email: selectedUser.email,
+      phone: selectedUser.phone,
+      age: selectedUser.age,
+      gender: selectedUser.gender,
+      role: selectedUser.role,
+      image: selectedUser.image,
+      address: { ...selectedUser.address },
+      company: { ...selectedUser.company },
+    } : INITIAL_FORM_DATA;
+
+    return JSON.stringify(formData) !== JSON.stringify(compareTo);
+  }, [formData, isEditMode, selectedUser]);
 
   useEffect(() => {
     if (isOpen) {
@@ -57,33 +74,7 @@ export const UserFormModal = ({ isOpen, isEditMode, selectedUser, onClose, onSuc
   if (!isOpen) return null;
 
   const validate = (): boolean => {
-    const newErrors: Record<string, string> = {};
-
-    if (!formData.firstName.trim() || formData.firstName.length < 2)
-      newErrors.firstName = 'First name must be at least 2 characters';
-    if (!formData.lastName.trim() || formData.lastName.length < 2)
-      newErrors.lastName = 'Last name must be at least 2 characters';
-
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!formData.email.trim() || !emailRegex.test(formData.email))
-      newErrors.email = 'Valid email is required';
-
-    if (!formData.phone.trim()) newErrors.phone = 'Phone number is required';
-    if (formData.age < 18 || formData.age > 100)
-      newErrors.age = 'Age must be between 18 and 100';
-
-    if (!formData.role.trim()) newErrors.role = 'Role is required';
-
-    if (!formData.address.address.trim()) newErrors['address.address'] = 'Address is required';
-    if (!formData.address.city.trim()) newErrors['address.city'] = 'City is required';
-    if (!formData.address.state.trim()) newErrors['address.state'] = 'State is required';
-    if (!formData.address.country.trim()) newErrors['address.country'] = 'Country is required';
-
-    if (!formData.company.name.trim()) newErrors['company.name'] = 'Company name is required';
-    if (!formData.company.department.trim())
-      newErrors['company.department'] = 'Department is required';
-    if (!formData.company.title.trim()) newErrors['company.title'] = 'Job title is required';
-
+    const newErrors = validateUserForm(formData);
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -111,7 +102,13 @@ export const UserFormModal = ({ isOpen, isEditMode, selectedUser, onClose, onSuc
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
 
-    if (name.includes('.')) {
+    if (name === 'age') {
+      const numericValue = value.replace(/\D/g, '').slice(0, 3);
+      setFormData((prev) => ({
+        ...prev,
+        [name]: numericValue ? parseInt(numericValue, 10) : 0,
+      }));
+    } else if (name.includes('.')) {
       const [parent, child] = name.split('.');
       setFormData((prev) => ({
         ...prev,
@@ -120,7 +117,7 @@ export const UserFormModal = ({ isOpen, isEditMode, selectedUser, onClose, onSuc
     } else {
       setFormData((prev) => ({
         ...prev,
-        [name]: name === 'age' ? parseInt(value, 10) || '' : value,
+        [name]: value,
       }));
     }
 
@@ -226,7 +223,7 @@ export const UserFormModal = ({ isOpen, isEditMode, selectedUser, onClose, onSuc
                     { value: 'male', label: 'Male' },
                     { value: 'female', label: 'Female' },
                   ])}
-                  {renderInput('Age', 'age', 'number', formData.age)}
+                  {renderInput('Age', 'age', 'text', formData.age)}
                   {renderSelect('Role', 'role', formData.role, [
                     { value: 'user', label: 'User' },
                     { value: 'admin', label: 'Admin' },
@@ -277,7 +274,7 @@ export const UserFormModal = ({ isOpen, isEditMode, selectedUser, onClose, onSuc
             <button
               type="submit"
               form="user-form"
-              disabled={isSubmitting}
+              disabled={isSubmitting || !isModifyContent}
               className="px-6 py-2 text-sm font-medium rounded-(--radius-sm) text-(--color-text-inverse) bg-(--color-primary) hover:-translate-y-px hover:shadow-(--shadow-md) shadow-(--shadow-xs) disabled:opacity-60 disabled:cursor-not-allowed transition-all duration-(--transition-fast) active:scale-[0.98] flex items-center justify-center min-w-[110px]"
             >
               {isSubmitting ? (
