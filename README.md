@@ -1,4 +1,4 @@
-# User Management Dashboard (Frontend)
+<img width="1906" height="918" alt="image" src="https://github.com/user-attachments/assets/d640aa30-1534-4175-a3ba-3068e6c6efa4" /># User Management Dashboard (Frontend)
 
 A premium, high-fidelity User Management Dashboard built with React 19, Vite, and Redux Toolkit. This application features a professional design system with high-contrast accessibility, smooth micro-interactions, and robust state management.
 
@@ -52,6 +52,11 @@ npm run preview
 - **Advanced Filtering & Search**: Real-time server-side filtering by role and search by name/email.
 - **Dynamic Routing**: Detail views for individual users with state-aware navigation.
 - **Robust Error Boundary**: Centralized error handling and API response normalization.
+- Toast notifications custom 
+- Skeleton loader custom
+- Dark mode 
+- Sticky header 
+- Pagination custom
 
 ## 📂 Folder Structure
 
@@ -70,6 +75,7 @@ npm run preview
 
 ### 1. State Management (Redux Toolkit)
 The application uses a "Single Source of Truth" pattern via Redux. We implemented `createAsyncThunk` to handle asynchronous API lifecycles (pending, fulfilled, rejected). This ensures the UI stays reactive and consistent during data fetching.
+-> in redux we use createAsyncThunk for api caliing 
 
 ### 2. API Integration & Error Handling
 We built a robust API service layer using Axios. Key implementations include:
